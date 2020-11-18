@@ -1,8 +1,8 @@
-page 50103 "Reserved Fields TAL"
+page 50104 "Field Reserv. Jnl Line TAL"
 {
-    Caption = 'Reserved Fields';
+    Caption = 'FieldReservationJnlLineTAL List';
     PageType = List;
-    SourceTable = "Reserved Field TAL";
+    SourceTable = "FieldReservationJnlLineTAL";
     UsageCategory = Lists;
     ApplicationArea = All;
 
@@ -50,24 +50,6 @@ page 50103 "Reserved Fields TAL"
                     Tooltip = 'Specifies the Reserved Date.';
                 }
 
-            }
-        }
-    }
-    actions
-    {
-        area(Processing)
-        {
-            action(Release)
-            {
-                ApplicationArea = All;
-                Image = ReleaseDoc;
-                ToolTip = 'Release The Selected Field ID';
-                trigger OnAction()
-                var
-                    ObjectReservationMgmtTAL: Codeunit "Object Reservation Mgmt. TAL";
-                begin
-                    ObjectReservationMgmtTAL.ReleaseFieldID(Rec);
-                end;
             }
         }
     }
