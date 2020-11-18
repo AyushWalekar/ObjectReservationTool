@@ -64,9 +64,9 @@ page 50103 "Reserved Fields TAL"
                 ToolTip = 'Release The Selected Field ID';
                 trigger OnAction()
                 var
-                    ObjectReservationMgmtTAL: Codeunit "Object Reservation Mgmt. TAL";
+                    ObjectReservationMgmt: Codeunit "Object Reservation Mgmt. TAL";
                 begin
-                    ObjectReservationMgmtTAL.ReleaseFieldID(Rec);
+                    ObjectReservationMgmt.ReleaseFieldID(Rec);
                 end;
             }
         }
