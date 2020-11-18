@@ -3,8 +3,6 @@ page 50103 "Reserved Fields TAL"
     Caption = 'Reserved Fields';
     PageType = List;
     SourceTable = "Reserved Field TAL";
-    UsageCategory = Lists;
-    ApplicationArea = All;
 
     layout
     {
@@ -16,37 +14,37 @@ page 50103 "Reserved Fields TAL"
 
                 field("Object Type"; "Object Type")
                 {
-                    ApplicationArea = All;
+                    ApplicationArea = ObjectReservationAppAreaTAL;
                     Tooltip = 'Specifies the Object Type.';
                 }
 
                 field("Object ID"; "Object ID")
                 {
-                    ApplicationArea = All;
+                    ApplicationArea = ObjectReservationAppAreaTAL;
                     Tooltip = 'Specifies the Object ID.';
                 }
 
                 field("Field ID"; "Field ID")
                 {
-                    ApplicationArea = All;
+                    ApplicationArea = ObjectReservationAppAreaTAL;
                     Tooltip = 'Specifies the Field ID.';
                 }
 
                 field("Field Name"; "Field Name")
                 {
-                    ApplicationArea = All;
+                    ApplicationArea = ObjectReservationAppAreaTAL;
                     Tooltip = 'Specifies the Field Name.';
                 }
 
                 field("Reserved By"; "Reserved By")
                 {
-                    ApplicationArea = All;
+                    ApplicationArea = ObjectReservationAppAreaTAL;
                     Tooltip = 'Specifies the Reserved By.';
                 }
 
                 field("Reserved Date"; "Reserved Date")
                 {
-                    ApplicationArea = All;
+                    ApplicationArea = ObjectReservationAppAreaTAL;
                     Tooltip = 'Specifies the Reserved Date.';
                 }
 
@@ -59,7 +57,7 @@ page 50103 "Reserved Fields TAL"
         {
             action(Release)
             {
-                ApplicationArea = All;
+                ApplicationArea = ObjectReservationAppAreaTAL;
                 Image = ReleaseDoc;
                 ToolTip = 'Release The Selected Field ID';
                 trigger OnAction()

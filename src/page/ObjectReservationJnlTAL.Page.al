@@ -1,11 +1,11 @@
 page 50101 "ObjectReservationJnlTAL"
 {
-    Caption = 'ObjectReservationJnlLineTAL';
+    Caption = 'Object Reservation Journal';
     PageType = Worksheet;
     SourceTable = "ObjectReservationJnlLineTAL";
     DelayedInsert = true;
     UsageCategory = Lists;
-    ApplicationArea = All;
+    ApplicationArea = ObjectReservationAppAreaTAL;
 
     layout
     {
@@ -17,37 +17,37 @@ page 50101 "ObjectReservationJnlTAL"
 
                 field("Batch Name"; Rec."Batch Name")
                 {
-                    ApplicationArea = All;
+                    ApplicationArea = ObjectReservationAppAreaTAL;
                     Tooltip = 'Specifies the Batch Name.';
                 }
 
                 field("Object Type"; Rec."Object Type")
                 {
-                    ApplicationArea = All;
+                    ApplicationArea = ObjectReservationAppAreaTAL;
                     Tooltip = 'Specifies the Object Type.';
                 }
 
                 field("Object ID"; Rec."Object ID")
                 {
-                    ApplicationArea = All;
+                    ApplicationArea = ObjectReservationAppAreaTAL;
                     Tooltip = 'Specifies the Object ID.';
                 }
 
                 field("Object Name"; Rec."Object Name")
                 {
-                    ApplicationArea = All;
+                    ApplicationArea = ObjectReservationAppAreaTAL;
                     Tooltip = 'Specifies the Object Name.';
                 }
 
                 field("Reserved By"; Rec."Reserved By")
                 {
-                    ApplicationArea = All;
+                    ApplicationArea = ObjectReservationAppAreaTAL;
                     Tooltip = 'Specifies the Reserved By.';
                 }
 
                 field("Reserved Date"; Rec."Reserved Date")
                 {
-                    ApplicationArea = All;
+                    ApplicationArea = ObjectReservationAppAreaTAL;
                     Tooltip = 'Specifies the Reserved Date.';
                 }
 
@@ -61,7 +61,7 @@ page 50101 "ObjectReservationJnlTAL"
         {
             action(SuggestObjectIDs)
             {
-                ApplicationArea = All;
+                ApplicationArea = ObjectReservationAppAreaTAL;
                 ToolTip = 'Provides suggestion for object IDs based on available ranges';
                 Image = Suggest;
 
@@ -72,7 +72,7 @@ page 50101 "ObjectReservationJnlTAL"
             }
             action(Reserve)
             {
-                ApplicationArea = All;
+                ApplicationArea = ObjectReservationAppAreaTAL;
                 ToolTip = 'Reserves the Object and Field IDs ';
                 Image = Reserve;
 
@@ -87,7 +87,7 @@ page 50101 "ObjectReservationJnlTAL"
         {
             action(ReserveFields)
             {
-                ApplicationArea = All;
+                ApplicationArea = ObjectReservationAppAreaTAL;
                 ToolTip = 'Reserve fields for current object';
                 Image = Reserve;
                 RunObject = page "Field Reserv. Jnl Line TAL";

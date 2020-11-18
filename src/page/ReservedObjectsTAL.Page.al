@@ -4,7 +4,7 @@ page 50100 "Reserved Objects TAL"
     PageType = List;
     SourceTable = "Reserved Object TAL";
     UsageCategory = Lists;
-    ApplicationArea = All;
+    ApplicationArea = ObjectReservationAppAreaTAL;
     InsertAllowed = false;
     ModifyAllowed = false;
     DeleteAllowed = false;
@@ -18,37 +18,37 @@ page 50100 "Reserved Objects TAL"
 
                 field("Batch Name"; "Batch Name")
                 {
-                    ApplicationArea = All;
+                    ApplicationArea = ObjectReservationAppAreaTAL;
                     Tooltip = 'Specifies the Project Name.';
                 }
 
                 field("Object Type"; "Object Type")
                 {
-                    ApplicationArea = All;
+                    ApplicationArea = ObjectReservationAppAreaTAL;
                     Tooltip = 'Specifies the Object Type.';
                 }
 
                 field("Object ID"; "Object ID")
                 {
-                    ApplicationArea = All;
+                    ApplicationArea = ObjectReservationAppAreaTAL;
                     Tooltip = 'Specifies the Object ID.';
                 }
 
                 field("Object Name"; "Object Name")
                 {
-                    ApplicationArea = All;
+                    ApplicationArea = ObjectReservationAppAreaTAL;
                     Tooltip = 'Specifies the Object Name.';
                 }
 
                 field("Reserved By"; "Reserved By")
                 {
-                    ApplicationArea = All;
+                    ApplicationArea = ObjectReservationAppAreaTAL;
                     Tooltip = 'Specifies the Reserved By.';
                 }
 
                 field("Reserved Date"; "Reserved Date")
                 {
-                    ApplicationArea = All;
+                    ApplicationArea = ObjectReservationAppAreaTAL;
                     Tooltip = 'Specifies the Reserved Date.';
                 }
 
@@ -65,7 +65,7 @@ page 50100 "Reserved Objects TAL"
                 Image = CreateDocument;
                 action("Create Reservation")
                 {
-                    ApplicationArea = All;
+                    ApplicationArea = ObjectReservationAppAreaTAL;
                     Caption = 'Create Reservation';
                     Image = Create;
                     Promoted = true;
@@ -81,7 +81,7 @@ page 50100 "Reserved Objects TAL"
             }
             action(Batches)
             {
-                ApplicationArea = All;
+                ApplicationArea = ObjectReservationAppAreaTAL;
                 Caption = 'Batches';
                 Image = Description;
                 Promoted = true;
@@ -100,11 +100,10 @@ page 50100 "Reserved Objects TAL"
         {
             action("Reserved Fields")
             {
-                ApplicationArea = All;
+                ApplicationArea = ObjectReservationAppAreaTAL;
                 Caption = 'Reserved Fields';
                 Image = Reserve;
                 Promoted = true;
-                PromotedCategory = Category4;
                 ToolTip = 'Reserved Fields ID for the Object';
                 trigger OnAction()
                 var
