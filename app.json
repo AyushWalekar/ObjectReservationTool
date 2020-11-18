@@ -12,8 +12,8 @@
   "logo": "",
   "dependencies": [],
   "screenshots": [],
-  "platform": "17.0.0.0",
-  "application": "17.0.0.0",
+  "platform": "16.0.0.0",
+  "application": "16.0.0.0",
   "idRanges": [
     {
       "from": 50100,
@@ -22,7 +22,7 @@
   ],
   "contextSensitiveHelpUrl": "https://ObjectReservationTool.com/help/",
   "showMyCode": true,
-  "runtime": "6.0",
+  "runtime": "5.0",
   "features": [
     "TranslationFile"
   ]
