@@ -55,6 +55,32 @@ page 50100 "Reserved Objects TAL"
             }
         }
     }
+    actions
+    {
+        area(Creation)
+        {
+            group("Reservation")
+            {
+                Caption = 'Reservation';
+                Image = CreateDocument;
+                action("Create Reservation")
+                {
+                    ApplicationArea = All;
+                    Caption = 'Create Reservation';
+                    Image = Create;
+                    Promoted = true;
+                    PromotedCategory = Process;
+                    ToolTip = 'Create Reseravation';
+                    trigger OnAction()
+                    var
+                        ObjectResJnl: Page ObjectReservationJnlTAL;
+                    begin
+                        ObjectResJnl.Run();
+                    end;
+                }
 
+            }
+        }
+    }
 
 }

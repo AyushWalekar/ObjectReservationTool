@@ -36,6 +36,7 @@ table 50101 "ObjectReservationJnlLineTAL"
             Caption = 'Reserved By';
             DataClassification = CustomerContent;
             TableRelation = User."User Name";
+            ValidateTableRelation = false;
         }
         field(7; "Reserved Date"; DateTime)
         {
