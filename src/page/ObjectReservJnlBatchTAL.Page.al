@@ -1,4 +1,4 @@
-page 50102 "Object Reservation Jnl Batch TAL"
+page 50102 "Object Reserv. Jnl Batch TAL"
 {
     Caption = 'ObjectReservationJnlBatchTAL List';
     PageType = List;
