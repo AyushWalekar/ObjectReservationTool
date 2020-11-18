@@ -78,7 +78,6 @@ page 50101 "ObjectReservationJnlTAL"
 
                 trigger OnAction()
                 begin
-                    // code to be added
 
                 end;
             }
@@ -91,7 +90,7 @@ page 50101 "ObjectReservationJnlTAL"
                 ApplicationArea = All;
                 ToolTip = 'Reserve fields for current object';
                 Image = Reserve;
-                RunObject = page "Reserved Fields TAL";
+                RunObject = page "Field Reserv. Jnl Line TAL";
                 RunPageLink = "Object Type" = field("Object Type"), "Object ID" = field("Object ID");
             }
         }
