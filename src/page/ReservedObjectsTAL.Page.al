@@ -78,7 +78,40 @@ page 50100 "Reserved Objects TAL"
                         ObjectResJnl.Run();
                     end;
                 }
+            }
+            action(Batches)
+            {
+                ApplicationArea = All;
+                Caption = 'Batches';
+                Image = Description;
+                Promoted = true;
+                PromotedCategory = Category4;
+                ToolTip = 'Available Batches';
+                trigger OnAction()
+                var
+                    ObjectReservJnlBatch: Page "Object Reserv. Jnl Batch TAL";
+                begin
+                    ObjectReservJnlBatch.Run();
+                end;
+            }
 
+        }
+        area(Navigation)
+        {
+            action("Reserved Fields")
+            {
+                ApplicationArea = All;
+                Caption = 'Reserved Fields';
+                Image = Reserve;
+                Promoted = true;
+                PromotedCategory = Category4;
+                ToolTip = 'Reserved Fields ID for the Object';
+                trigger OnAction()
+                var
+                    ReservedFields: Page "Reserved Fields TAL";
+                begin
+                    ReservedFields.Run();
+                end;
             }
         }
     }
