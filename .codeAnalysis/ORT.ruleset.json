@@ -1,0 +1,21 @@
+{
+    "name": "ORT Project ruleset",
+    "description": "List of project specific rules",
+    "rules": [
+        {
+            "id": "AS0084",
+            "action": "None",
+            "justification": "Until object range is decided"
+        },
+        {
+            "id": "AS0051",
+            "action": "None",
+            "justification": "Until planned for app source"
+        },
+        {
+            "id": "AS0052",
+            "action": "None",
+            "justification": "Until planned for app source"
+        }
+    ]
+}

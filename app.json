@@ -1,0 +1,29 @@
+{
+  "id": "b8f01fc6-d66e-4117-9d10-aed314f3e762",
+  "name": "ObjectReservationTool",
+  "publisher": "Team ALpha",
+  "version": "0.0.0.0",
+  "brief": "",
+  "description": "",
+  "privacyStatement": "",
+  "EULA": "",
+  "help": "",
+  "url": "",
+  "logo": "",
+  "dependencies": [],
+  "screenshots": [],
+  "platform": "17.0.0.0",
+  "application": "17.0.0.0",
+  "idRanges": [
+    {
+      "from": 50100,
+      "to": 50149
+    }
+  ],
+  "contextSensitiveHelpUrl": "https://ObjectReservationTool.com/help/",
+  "showMyCode": true,
+  "runtime": "6.0",
+  "features": [
+    "TranslationFile"
+  ]
+}

@@ -1,0 +1,13 @@
+{
+    "al.codeAnalyzers": [
+        "${AppSourceCop}",
+        "${CodeCop}",
+        "${UICop}"
+    ],
+    "al.enableCodeAnalysis": true,
+    "al.backgroundCodeAnalysis": true,
+    "al.ruleSetPath": "./.codeAnalysis/ORT.ruleset.json",
+    "CRS.FileNamePattern": "<ObjectNameShort>.<ObjectTypeShortPascalCase>.al",
+    "CRS.FileNamePatternExtensions": "<ObjectNameShort>.<ObjectTypeShortPascalCase>.al",
+    "CRS.FileNamePatternPageCustomizations": "<ObjectNameShort>.<ObjectTypeShortPascalCase>.al",
+}
