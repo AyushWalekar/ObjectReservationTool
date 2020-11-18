@@ -70,15 +70,15 @@ page 50101 "ObjectReservationJnlTAL"
                     // code to be added
                 end;
             }
-            action(Release)
+            action(Reserve)
             {
                 ApplicationArea = All;
-                ToolTip = 'Release the object';
-                Image = ReleaseDoc;
+                ToolTip = 'Reserves the Object and Field IDs ';
+                Image = Reserve;
 
                 trigger OnAction()
                 begin
-                    Rec.Delete();
+                    // code to be added
 
                 end;
             }
