@@ -2,36 +2,44 @@ table 50104 "FieldReservationJnlLineTAL"
 {
     Caption = 'Field Reservation Journal Line';
     DataClassification = CustomerContent;
+    LookupPageId = "Field Reserv. Jnl Line TAL";
+    DrillDownPageId = "Field Reserv. Jnl Line TAL";
 
     fields
     {
-        field(1; "Object Type"; Enum "Object Type TAL")
+        field(1; "Batch Name"; Code[20])
+        {
+            Caption = 'Batch Name';
+            DataClassification = CustomerContent;
+        }
+        field(2; "Object Type"; Enum "Object Type TAL")
         {
             Caption = 'Object Type';
             DataClassification = CustomerContent;
         }
-        field(2; "Object ID"; Integer)
+        field(3; "Object ID"; Integer)
         {
             Caption = 'Object ID';
             DataClassification = CustomerContent;
         }
-        field(3; "Field ID"; Integer)
+        field(4; "Field ID"; Integer)
         {
             Caption = 'Field ID';
             DataClassification = CustomerContent;
         }
-        field(4; "Field Name"; Text[30])
+        field(5; "Field Name"; Text[30])
         {
             Caption = 'Field Name';
             DataClassification = CustomerContent;
         }
-        field(5; "Reserved By"; Code[50])
+        field(6; "Reserved By"; Code[50])
         {
             Caption = 'Reserved By';
             DataClassification = CustomerContent;
             TableRelation = User."User Name";
+            ValidateTableRelation = false;
         }
-        field(6; "Reserved Date"; DateTime)
+        field(7; "Reserved Date"; DateTime)
         {
             Caption = 'Reserved Date';
             DataClassification = CustomerContent;
@@ -40,7 +48,7 @@ table 50104 "FieldReservationJnlLineTAL"
 
     keys
     {
-        key(PK; "Object Type", "Object ID", "Field ID")
+        key(PK; "Batch Name", "Object Type", "Object ID", "Field ID")
         {
             Clustered = true;
         }
@@ -48,7 +56,7 @@ table 50104 "FieldReservationJnlLineTAL"
 
     trigger OnInsert()
     begin
-
+        "Reserved By" := format(UserId);
     end;
 
     trigger OnModify()

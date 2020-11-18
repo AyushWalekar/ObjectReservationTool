@@ -3,6 +3,9 @@ page 50103 "Reserved Fields TAL"
     Caption = 'Reserved Fields';
     PageType = List;
     SourceTable = "Reserved Field TAL";
+    InsertAllowed = false;
+    DeleteAllowed = false;
+    ModifyAllowed = false;
 
     layout
     {
@@ -59,12 +62,15 @@ page 50103 "Reserved Fields TAL"
             {
                 ApplicationArea = ObjectReservationAppAreaTAL;
                 Image = ReleaseDoc;
-                ToolTip = 'Release The Selected Field ID';
+                ToolTip = 'Release The Selected Fields';
                 trigger OnAction()
                 var
                     ObjectReservationMgmt: Codeunit "Object Reservation Mgmt. TAL";
+                    Rec2: Record "Reserved Field TAL";
                 begin
-                    ObjectReservationMgmt.ReleaseFieldID(Rec);
+                    CurrPage.SetSelectionFilter(Rec2);
+                    if Rec2.Count > 0 then
+                        ObjectReservationMgmt.ReleaseField(Rec2);
                 end;
             }
         }

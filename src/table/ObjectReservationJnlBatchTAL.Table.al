@@ -2,6 +2,8 @@ table 50102 "ObjectReservationJnlBatchTAL"
 {
     Caption = 'Object Reservation Journal Batch';
     DataClassification = CustomerContent;
+    LookupPageId = "Object Reserv. Jnl Batch TAL";
+    DrillDownPageId = "Object Reserv. Jnl Batch TAL";
 
     fields
     {
@@ -20,6 +22,7 @@ table 50102 "ObjectReservationJnlBatchTAL"
             Caption = 'Assigned User ID"';
             DataClassification = CustomerContent;
             TableRelation = User."User Name";
+            ValidateTableRelation = false;
         }
     }
 
@@ -33,7 +36,7 @@ table 50102 "ObjectReservationJnlBatchTAL"
 
     trigger OnInsert()
     begin
-
+        "Assigned User ID" := format(UserId);
     end;
 
     trigger OnModify()
@@ -42,8 +45,12 @@ table 50102 "ObjectReservationJnlBatchTAL"
     end;
 
     trigger OnDelete()
+    var
+        ObjectReservationJnlLine: Record ObjectReservationJnlLineTAL;
     begin
-
+        ObjectReservationJnlLine.SetRange("Batch Name", Rec.Name);
+        if not ObjectReservationJnlLine.IsEmpty() then
+            ObjectReservationJnlLine.DeleteAll(true);
     end;
 
     trigger OnRename()

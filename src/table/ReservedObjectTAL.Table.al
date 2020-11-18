@@ -2,14 +2,11 @@ table 50100 "Reserved Object TAL"
 {
     Caption = 'Reserved Object';
     DataClassification = CustomerContent;
+    LookupPageId = "Reserved Objects TAL";
+    DrillDownPageId = "Reserved Objects TAL";
 
     fields
     {
-        field(1; "Batch Name"; Code[20])
-        {
-            Caption = 'Batch Name';
-            DataClassification = CustomerContent;
-        }
         field(2; "Object Type"; Enum "Object Type TAL")
         {
             Caption = 'Object Type';
@@ -30,7 +27,7 @@ table 50100 "Reserved Object TAL"
             Caption = 'Reserved By';
             DataClassification = CustomerContent;
         }
-        field(8; "Reserved Date"; DateTime)
+        field(6; "Reserved Date"; DateTime)
         {
             Caption = 'Reserved Date';
             DataClassification = CustomerContent;
@@ -39,7 +36,7 @@ table 50100 "Reserved Object TAL"
 
     keys
     {
-        key(PK; "Batch Name", "Object Type", "Object ID")
+        key(PK; "Object Type", "Object ID")
         {
             Clustered = true;
         }

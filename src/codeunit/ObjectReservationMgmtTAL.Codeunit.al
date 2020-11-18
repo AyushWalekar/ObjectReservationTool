@@ -1,25 +1,52 @@
 codeunit 50100 "Object Reservation Mgmt. TAL"
 {
-    procedure ReleaseFieldID(Rec: Record "Reserved Field TAL")
+    procedure ReleaseField(var ReservedField: Record "Reserved Field TAL")
     begin
-        Rec.DeleteAll();
+        ReservedField.DeleteAll();
     end;
 
-    procedure ReleaseObjectID(Rec: Record "Reserved Object TAL")
+    procedure ReleaseObject(var ReservedObject: Record "Reserved Object TAL")
     var
         ReservedField: Record "Reserved Field TAL";
     begin
-        if Rec.FindSet() then
+        if ReservedObject.FindSet() then
             repeat
-                ReservedField.SetRange("Object Type", Rec."Object Type");
-                ReservedField.SetRange("Object ID", Rec."Object ID");
-                ReleaseFieldID(ReservedField);
-            until Rec.Next() = 0;
-        Rec.DeleteAll();
+                ReservedField.SetRange("Object Type", ReservedObject."Object Type");
+                ReservedField.SetRange("Object ID", ReservedObject."Object ID");
+                ReleaseField(ReservedField);
+            until ReservedObject.Next() = 0;
+        ReservedObject.DeleteAll();
     end;
 
-    procedure ReserveJournal(Rec: Record ObjectReservationJnlLineTAL)
+    procedure ReserveJournal(var ObjectReservationJnlLine: Record ObjectReservationJnlLineTAL)
+    var
+        ReservedObject: Record "Reserved Object TAL";
+
     begin
 
+        if ObjectReservationJnlLine.FindSet() then
+            repeat
+                ReservedObject.Init();
+                ReservedObject.TransferFields(ObjectReservationJnlLine);
+                ReservedObject.Insert();
+            until ObjectReservationJnlLine.Next() = 0;
+        ReserveFields(ObjectReservationJnlLine."Batch Name");
+        ObjectReservationJnlLine.DeleteAll();
+    end;
+
+
+    local procedure ReserveFields(BatchName: Code[20])
+    var
+        ReservedField: Record "Reserved Field TAL";
+        FieldReservationJnlLine: Record FieldReservationJnlLineTAL;
+    begin
+        FieldReservationJnlLine.SetRange("Batch Name", BatchName);
+        if FieldReservationJnlLine.FindSet() then
+            repeat
+                ReservedField.Init();
+                ReservedField.TransferFields(FieldReservationJnlLine);
+                ReservedField.Insert();
+            until FieldReservationJnlLine.Next() = 0;
+        FieldReservationJnlLine.DeleteAll();
     end;
 }

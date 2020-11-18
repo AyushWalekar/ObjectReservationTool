@@ -16,12 +16,6 @@ page 50100 "Reserved Objects TAL"
             repeater(Group)
             {
 
-                field("Batch Name"; "Batch Name")
-                {
-                    ApplicationArea = ObjectReservationAppAreaTAL;
-                    Tooltip = 'Specifies the Project Name.';
-                }
-
                 field("Object Type"; "Object Type")
                 {
                     ApplicationArea = ObjectReservationAppAreaTAL;
@@ -57,35 +51,46 @@ page 50100 "Reserved Objects TAL"
     }
     actions
     {
-        area(Creation)
+        area(Processing)
         {
-            group("Reservation")
+            action("Create Reservation")
             {
-                Caption = 'Reservation';
+                ApplicationArea = ObjectReservationAppAreaTAL;
+                Caption = 'Create Reservation';
                 Image = CreateDocument;
-                action("Create Reservation")
-                {
-                    ApplicationArea = ObjectReservationAppAreaTAL;
-                    Caption = 'Create Reservation';
-                    Image = Create;
-                    Promoted = true;
-                    PromotedCategory = Process;
-                    ToolTip = 'Create Reseravation';
-                    trigger OnAction()
-                    var
-                        ObjectResJnl: Page ObjectReservationJnlTAL;
-                    begin
-                        ObjectResJnl.Run();
-                    end;
-                }
+                Promoted = true;
+                PromotedCategory = Process;
+                ToolTip = 'Create Reseravation';
+                trigger OnAction()
+                var
+                    ObjectResJnl: Page ObjectReservationJnlTAL;
+                begin
+                    ObjectResJnl.Run();
+                end;
             }
+            action(Release)
+            {
+                ApplicationArea = ObjectReservationAppAreaTAL;
+                Image = ReleaseDoc;
+                ToolTip = 'Release The Selected Object';
+                trigger OnAction()
+                var
+                    ObjectReservationMgmt: Codeunit "Object Reservation Mgmt. TAL";
+                    Rec2: Record "Reserved Object TAL";
+                begin
+                    CurrPage.SetSelectionFilter(Rec2);
+                    if Rec2.Count > 0 then
+                        ObjectReservationMgmt.ReleaseObject(Rec2);
+                end;
+            }
+        }
+        area(Navigation)
+        {
             action(Batches)
             {
                 ApplicationArea = ObjectReservationAppAreaTAL;
                 Caption = 'Batches';
                 Image = Description;
-                Promoted = true;
-                PromotedCategory = Category4;
                 ToolTip = 'Available Batches';
                 trigger OnAction()
                 var
@@ -94,23 +99,14 @@ page 50100 "Reserved Objects TAL"
                     ObjectReservJnlBatch.Run();
                 end;
             }
-
-        }
-        area(Navigation)
-        {
             action("Reserved Fields")
             {
                 ApplicationArea = ObjectReservationAppAreaTAL;
                 Caption = 'Reserved Fields';
                 Image = Reserve;
-                Promoted = true;
                 ToolTip = 'Reserved Fields ID for the Object';
-                trigger OnAction()
-                var
-                    ReservedFields: Page "Reserved Fields TAL";
-                begin
-                    ReservedFields.Run();
-                end;
+                RunObject = Page "Reserved Fields TAL";
+                RunPageLink = "Object ID" = field("Object ID"), "Object Type" = field("Object Type");
             }
         }
     }

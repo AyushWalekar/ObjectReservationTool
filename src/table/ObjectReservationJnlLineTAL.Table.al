@@ -2,6 +2,8 @@ table 50101 "ObjectReservationJnlLineTAL"
 {
     Caption = 'Object Reservation Journal Line';
     DataClassification = ToBeClassified;
+    LookupPageId = ObjectReservationJnlTAL;
+    DrillDownPageId = ObjectReservationJnlTAL;
 
     fields
     {
@@ -11,34 +13,30 @@ table 50101 "ObjectReservationJnlLineTAL"
             DataClassification = CustomerContent;
             TableRelation = ObjectReservationJnlBatchTAL.Name;
         }
-        field(2; "Line No"; Integer)
-        {
-            Caption = 'Line No.';
-            DataClassification = CustomerContent;
-        }
-        field(3; "Object Type"; Enum "Object Type TAL")
+
+        field(2; "Object Type"; Enum "Object Type TAL")
         {
             Caption = 'Object Type';
             DataClassification = CustomerContent;
         }
-        field(4; "Object ID"; Integer)
+        field(3; "Object ID"; Integer)
         {
             Caption = 'Object ID';
             DataClassification = CustomerContent;
         }
-        field(5; "Object Name"; Text[30])
+        field(4; "Object Name"; Text[30])
         {
             Caption = 'Object Name';
             DataClassification = CustomerContent;
         }
-        field(6; "Reserved By"; Code[50])
+        field(5; "Reserved By"; Code[50])
         {
             Caption = 'Reserved By';
             DataClassification = CustomerContent;
             TableRelation = User."User Name";
             ValidateTableRelation = false;
         }
-        field(7; "Reserved Date"; DateTime)
+        field(6; "Reserved Date"; DateTime)
         {
             Caption = 'Reserved Date';
             DataClassification = CustomerContent;
@@ -55,7 +53,7 @@ table 50101 "ObjectReservationJnlLineTAL"
 
     trigger OnInsert()
     begin
-
+        "Reserved By" := format(UserId);
     end;
 
     trigger OnModify()
@@ -64,8 +62,13 @@ table 50101 "ObjectReservationJnlLineTAL"
     end;
 
     trigger OnDelete()
+    var
+        FieldReservationJnlLine: Record FieldReservationJnlLineTAL;
     begin
-
+        FieldReservationJnlLine.SetRange("Object Type", Rec."Object Type");
+        FieldReservationJnlLine.SetRange("Object ID", Rec."Object ID");
+        if not FieldReservationJnlLine.IsEmpty() then
+            FieldReservationJnlLine.DeleteAll();
     end;
 
     trigger OnRename()

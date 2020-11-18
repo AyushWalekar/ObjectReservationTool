@@ -12,15 +12,15 @@ page 50101 "ObjectReservationJnlTAL"
 
         area(content)
         {
+            field("Batch Name"; BatchName)
+            {
+                Caption = 'Batch Name';
+                ApplicationArea = ObjectReservationAppAreaTAL;
+                Tooltip = 'Specifies the Batch Name.';
+            }
+
             repeater(Group)
             {
-
-                field("Batch Name"; Rec."Batch Name")
-                {
-                    ApplicationArea = ObjectReservationAppAreaTAL;
-                    Tooltip = 'Specifies the Batch Name.';
-                }
-
                 field("Object Type"; Rec."Object Type")
                 {
                     ApplicationArea = ObjectReservationAppAreaTAL;
@@ -68,6 +68,7 @@ page 50101 "ObjectReservationJnlTAL"
                 trigger OnAction()
                 begin
                     // code to be added
+                    ;
                 end;
             }
             action(Reserve)
@@ -77,8 +78,10 @@ page 50101 "ObjectReservationJnlTAL"
                 Image = Reserve;
 
                 trigger OnAction()
+                var
+                    ObjectReservationMgmt: Codeunit "Object Reservation Mgmt. TAL";
                 begin
-
+                    ObjectReservationMgmt.ReserveJournal(Rec);
                 end;
             }
 
@@ -91,9 +94,19 @@ page 50101 "ObjectReservationJnlTAL"
                 ToolTip = 'Reserve fields for current object';
                 Image = Reserve;
                 RunObject = page "Field Reserv. Jnl Line TAL";
-                RunPageLink = "Object Type" = field("Object Type"), "Object ID" = field("Object ID");
+                RunPageLink = "Batch Name" = field("Batch Name"), "Object Type" = field("Object Type"), "Object ID" = field("Object ID");
             }
         }
     }
+    trigger OnOpenPage()
+    begin
+        //to be done
+
+    end;
+
+
+    var
+        BatchName: Code[20];
+
 
 }

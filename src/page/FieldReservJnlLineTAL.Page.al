@@ -1,6 +1,6 @@
 page 50104 "Field Reserv. Jnl Line TAL"
 {
-    Caption = 'FieldReservationJnlLineTAL List';
+    Caption = 'Field Reservation Journal Line';
     PageType = List;
     SourceTable = "FieldReservationJnlLineTAL";
 
@@ -16,12 +16,14 @@ page 50104 "Field Reserv. Jnl Line TAL"
                 {
                     ApplicationArea = ObjectReservationAppAreaTAL;
                     Tooltip = 'Specifies the Object Type.';
+                    Editable = False;
                 }
 
                 field("Object ID"; "Object ID")
                 {
                     ApplicationArea = ObjectReservationAppAreaTAL;
                     Tooltip = 'Specifies the Object ID.';
+                    Editable = False;
                 }
 
                 field("Field ID"; "Field ID")
