@@ -85,6 +85,7 @@ page 50101 "ObjectReservationJnlTAL"
                 ApplicationArea = ObjectReservationAppAreaTAL;
                 ToolTip = 'Provides suggestion for object IDs based on available ranges';
                 Image = Suggest;
+                RunObject = report "Suggest Objects TAL";
 
                 trigger OnAction()
                 begin

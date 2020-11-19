@@ -49,6 +49,11 @@ table 50101 "ObjectReservationJnlLineTAL"
             Caption = 'Reserved Date';
             DataClassification = CustomerContent;
         }
+        field(7; "ID Range"; Integer)
+        {
+            Caption = 'ID Range';
+            DataClassification = CustomerContent;
+        }
     }
 
     keys

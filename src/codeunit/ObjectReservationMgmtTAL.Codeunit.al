@@ -21,7 +21,6 @@ codeunit 50100 "Object Reservation Mgmt. TAL"
     procedure ReserveJournal(var ObjectReservationJnlLine: Record ObjectReservationJnlLineTAL)
     var
         ReservedObject: Record "Reserved Object TAL";
-
     begin
 
         if ObjectReservationJnlLine.FindSet() then
@@ -79,10 +78,87 @@ codeunit 50100 "Object Reservation Mgmt. TAL"
 
     end;
 
-    procedure ValidateFieldName()
+    procedure ValidateFieldName(ObjectType: enum "Object Type TAL"; ObjectID: Integer; FieldName: Text[30])
     var
 
     begin
 
     end;
+
+    procedure SuggestObjects(ObjectsArray: array[12] of Integer; StartId: Integer; EndId: Integer)
+    var
+        ObjectReservationJnlLine: Record ObjectReservationJnlLineTAL;
+        Counter: Integer;
+        maxValue: Integer;
+
+    begin
+        maxValue := 0;
+        for Counter := 1 to 12 do
+            if ObjectsArray[Counter] > maxValue then
+                maxValue := ObjectsArray[Counter];
+
+        if not CheckObjectRangeAvailability(maxValue, StartId, EndId) then
+            Error(CouldnotReserveErr)
+        else
+            for counter := StartingIDtoReserve to (StartingIDtoReserve + maxValue - 1) do begin
+                ObjectReservationJnlLine.Init();
+                ObjectReservationJnlLine."Batch Name" := '';
+                ObjectReservationJnlLine."Object Type" := ObjectReservationJnlLine."Object Type"::Codeunit;
+                ObjectReservationJnlLine.Validate("Object ID", Counter);
+                ObjectReservationJnlLine.Insert(true);
+            end;
+
+    end;
+
+    local procedure CheckObjectRangeAvailability(ObjectCount: Integer; StartId: Integer; EndId: Integer): Boolean
+    var
+        counter: Integer;
+        counter1: Integer;
+        ObjectAvailable: Boolean;
+    begin
+        for counter := StartId to (EndId - ObjectCount) do begin
+            for counter1 := counter to (counter + ObjectCount) do begin
+                ObjectAvailable := CheckObjectAvailability(counter1);
+                if not ObjectAvailable then begin
+                    counter := counter1;
+                    break;
+                end;
+            end;
+            if ObjectAvailable then begin
+                StartingIDtoReserve := counter;
+                exit(true);
+            end;
+        end;
+        exit(ObjectAvailable);
+    end;
+
+    local procedure CheckObjectAvailability(ObjectId: Integer): Boolean
+    var
+        ReservedObject: Record "Reserved Object TAL";
+        ObjectReservationJnlLine: Record ObjectReservationJnlLineTAL;
+        AllObject: Record AllObjWithCaption;
+        LicensePermission: Record "License Permission";
+
+    begin
+        //ReservedObject.SetRange("Object Type", ObjectType);
+        ReservedObject.SetRange("Object ID", ObjectId);
+        if not ReservedObject.IsEmpty() then
+            exit(false);
+        ObjectReservationJnlLine.SetRange("Object ID", ObjectId);
+        if not ObjectReservationJnlLine.IsEmpty() then
+            exit(false);
+        //AllObject.SetRange("Object Type", ObjectType);
+        AllObject.SetRange("Object ID", ObjectId);
+        if not AllObject.IsEmpty() then
+            exit(false);
+        //LicensePermission.SetRange("Object Type", ObjectType);
+        // LicensePermission.SetRange("Object Number", ObjectId);
+        // if not LicensePermission.IsEmpty() then
+        //     exit(false);
+        exit(true);
+    end;
+
+    var
+        StartingIDtoReserve: Integer;
+        CouldnotReserveErr: Label 'Could not reserve the object IDs';
 }

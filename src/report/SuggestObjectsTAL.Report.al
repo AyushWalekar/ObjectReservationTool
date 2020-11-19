@@ -5,17 +5,13 @@ report 50100 "Suggest Objects TAL"
     ApplicationArea = All;
     ProcessingOnly = true;
 
-    // dataset
-    // {
-    //     dataitem(DataItemName; SourceTableName)
-    //     {
-    //         column(ColumnName; SourceFieldName)
-    //         {
-
-    //         }
-    //     }
-    // }
-
+    dataset
+    {
+        dataitem(ObjectReservationJnlLine; ObjectReservationJnlLineTAL)
+        {
+            RequestFilterFields = "ID Range";
+        }
+    }
     requestpage
     {
         layout
@@ -24,84 +20,82 @@ report 50100 "Suggest Objects TAL"
             {
                 group(GroupName)
                 {
-                    field("Table Count"; TableCount)
+                    field("Table Count"; ObjectCount[1])
                     {
                         ApplicationArea = All;
                         Caption = 'Table Count';
                         ToolTip = 'Number of required tables';
                     }
 
-                    field("Page Count"; PageCount)
-                    {
-                        ApplicationArea = All;
-                        Caption = 'Page Count';
-                        ToolTip = 'Number of required pages';
-                    }
-
-                    field("Codeunit Count"; CodeunitCount)
-                    {
-                        ApplicationArea = All;
-                        Caption = 'Codeunit Count';
-                        ToolTip = 'Number of required codeunits';
-                    }
-
-                    field("Report Count"; ReportCount)
-                    {
-                        ApplicationArea = All;
-                        Caption = 'Report Count';
-                        ToolTip = 'Number of required reports';
-                    }
-
-                    field("TableExt Count"; TableExtCount)
+                    field("TableExt Count"; ObjectCount[2])
                     {
                         ApplicationArea = All;
                         Caption = 'Table Extension Count';
                         ToolTip = 'Number of required table extensions';
                     }
 
-                    field("PageExt Count"; PageExtCount)
+                    field("Page Count"; ObjectCount[3])
+                    {
+                        ApplicationArea = All;
+                        Caption = 'Page Count';
+                        ToolTip = 'Number of required pages';
+                    }
+
+                    field("PageExt Count"; ObjectCount[4])
                     {
                         ApplicationArea = All;
                         Caption = 'Page Extension Count';
                         ToolTip = 'Number of required page extensions';
                     }
 
-                    field("XMLPort Count"; XMLPortCount)
+                    field("Report Count"; ObjectCount[5])
+                    {
+                        ApplicationArea = All;
+                        Caption = 'Report Count';
+                        ToolTip = 'Number of required reports';
+                    }
+                    field("Codeunit Count"; ObjectCount[6])
+                    {
+                        ApplicationArea = All;
+                        Caption = 'Codeunit Count';
+                        ToolTip = 'Number of required codeunits';
+                    }
+                    field("XMLPort Count"; ObjectCount[7])
                     {
                         ApplicationArea = All;
                         Caption = 'XML Port Count';
                         ToolTip = 'Number of required XML Ports';
                     }
 
-                    field("Query Count"; QueryCount)
+                    field("Query Count"; ObjectCount[8])
                     {
                         ApplicationArea = All;
                         Caption = 'Query Count';
                         ToolTip = 'Number of required queries';
                     }
 
-                    field("Enum Count"; EnumCount)
+                    field("Enum Count"; ObjectCount[9])
                     {
                         ApplicationArea = All;
                         Caption = 'Enum Count';
                         ToolTip = 'Number of required enums';
                     }
 
-                    field("EnumExt Count"; EnumExtCount)
+                    field("EnumExt Count"; ObjectCount[10])
                     {
                         ApplicationArea = All;
                         Caption = 'Enum Extension Count';
                         ToolTip = 'Number of required enum extensions';
                     }
 
-                    field("Profile Count"; ProfileCount)
+                    field("Profile Count"; ObjectCount[11])
                     {
                         ApplicationArea = All;
                         Caption = 'Profile Count';
                         ToolTip = 'Number of required profiles';
                     }
 
-                    field("ProfileExt Count"; ProfileExtCount)
+                    field("ProfileExt Count"; ObjectCount[12])
                     {
                         ApplicationArea = All;
                         Caption = 'Profile Extensions Count';
@@ -110,19 +104,25 @@ report 50100 "Suggest Objects TAL"
                 }
             }
         }
-
-        var
-            TableCount: Integer;
-            TableExtCount: Integer;
-            PageCount: Integer;
-            PageExtCount: Integer;
-            ReportCount: Integer;
-            CodeunitCount: Integer;
-            XMLPortCount: Integer;
-            QueryCount: Integer;
-            EnumCount: Integer;
-            EnumExtCount: Integer;
-            ProfileCount: Integer;
-            ProfileExtCount: Integer;
     }
+
+    trigger OnPreReport()
+    begin
+        Text := ObjectReservationJnlLine.GetFilter("ID Range");
+        if Text = '' then
+            Error(IdRangeMissingLbl);
+
+        Evaluate(StartId, CopyStr(Text, 1, Text.LastIndexOf('.') - 2));
+        Evaluate(EndId, CopyStr(Text, Text.LastIndexOf('.') + 1), StrLen(Text));
+
+        ObjectReservationMgmt.SuggestObjects(ObjectCount, StartId, EndId);
+    end;
+
+    var
+        ObjectReservationMgmt: Codeunit "Object Reservation Mgmt. TAL";
+        ObjectCount: array[12] of Integer;
+        IdRangeMissingLbl: Label 'ID Range can not be blank', MaxLength = 30;
+        StartId: Integer;
+        EndId: Integer;
+        Text: text;
 }
