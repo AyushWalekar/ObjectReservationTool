@@ -44,22 +44,8 @@ table 50100 "Reserved Object TAL"
 
     trigger OnInsert()
     begin
-
-    end;
-
-    trigger OnModify()
-    begin
-
-    end;
-
-    trigger OnDelete()
-    begin
-
-    end;
-
-    trigger OnRename()
-    begin
-
+        "Reserved By" := Format(userid);
+        "Reserved Date" := CurrentDateTime;
     end;
 
 }

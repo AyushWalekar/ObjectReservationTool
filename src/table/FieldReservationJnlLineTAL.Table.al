@@ -26,31 +26,22 @@ table 50104 "FieldReservationJnlLineTAL"
         {
             Caption = 'Field ID';
             DataClassification = CustomerContent;
-
-            trigger OnValidate()
-            begin
-                ObjectReservationMgmt.ValidateFieldID("Object Type", "Object ID", "Field ID");
-            end;
         }
         field(5; "Field Name"; Text[30])
         {
             Caption = 'Field Name';
             DataClassification = CustomerContent;
-            trigger OnValidate()
-            begin
-                ObjectReservationMgmt.ValidateFieldName("Object Type", "Object ID", "Field Name");
-            end;
         }
         field(6; "Reserved By"; Code[50])
         {
-            Caption = 'Reserved By';
+            Caption = 'Created By';
             DataClassification = CustomerContent;
             TableRelation = User."User Name";
             ValidateTableRelation = false;
         }
         field(7; "Reserved Date"; DateTime)
         {
-            Caption = 'Reserved Date';
+            Caption = 'Created Date';
             DataClassification = CustomerContent;
         }
     }
@@ -66,23 +57,6 @@ table 50104 "FieldReservationJnlLineTAL"
     trigger OnInsert()
     begin
         "Reserved By" := format(UserId);
+        "Reserved Date" := CurrentDateTime;
     end;
-
-    trigger OnModify()
-    begin
-
-    end;
-
-    trigger OnDelete()
-    begin
-
-    end;
-
-    trigger OnRename()
-    begin
-
-    end;
-
-    var
-        ObjectReservationMgmt: codeunit "Object Reservation Mgmt. TAL";
 }

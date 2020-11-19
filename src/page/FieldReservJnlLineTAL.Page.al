@@ -41,13 +41,13 @@ page 50104 "Field Reserv. Jnl Line TAL"
                 field("Reserved By"; Rec."Reserved By")
                 {
                     ApplicationArea = ObjectReservationAppAreaTAL;
-                    Tooltip = 'Specifies the Reserved By.';
+                    Tooltip = 'Specifies the Created By.';
                 }
 
                 field("Reserved Date"; Rec."Reserved Date")
                 {
                     ApplicationArea = ObjectReservationAppAreaTAL;
-                    Tooltip = 'Specifies the Reserved Date.';
+                    Tooltip = 'Specifies the Created Date.';
                 }
 
             }

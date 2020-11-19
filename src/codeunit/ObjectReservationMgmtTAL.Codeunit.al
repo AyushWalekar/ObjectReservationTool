@@ -58,56 +58,32 @@ codeunit 50100 "Object Reservation Mgmt. TAL"
     end;
 
     procedure ValidateObjectID(ObjectType: Enum "Object Type TAL"; ObjectID: Integer)
-    var
-
     begin
-
+        if not CheckObjectIDAvailability(ObjectType, ObjectID) then
+            Error(ObjectIdNotAvailableLbl, ObjectID);
     end;
 
     procedure ValidateObjectName(ObjectType: Enum "Object Type TAL"; ObjectName: Text[30])
-    var
-
     begin
+        if not CheckObjectNameAvailability(ObjectType, ObjectName) then
+            Error(ObjectNameNotAvailableLbl, ObjectName);
 
     end;
 
-    procedure ValidateFieldID(ObjectType: enum "Object Type TAL"; ObjectID: Integer; FieldID: Integer)
+    procedure SuggestObjects(ObjectsArray: array[12] of Integer; StartId: Integer; EndId: Integer): Integer
     var
-
-    begin
-
-    end;
-
-    procedure ValidateFieldName(ObjectType: enum "Object Type TAL"; ObjectID: Integer; FieldName: Text[30])
-    var
-
-    begin
-
-    end;
-
-    procedure SuggestObjects(ObjectsArray: array[12] of Integer; StartId: Integer; EndId: Integer)
-    var
-        ObjectReservationJnlLine: Record ObjectReservationJnlLineTAL;
         Counter: Integer;
         maxValue: Integer;
-
     begin
         maxValue := 0;
-        for Counter := 1 to 12 do
+        for Counter := 1 to System.ArrayLen(ObjectsArray) do
             if ObjectsArray[Counter] > maxValue then
                 maxValue := ObjectsArray[Counter];
 
         if not CheckObjectRangeAvailability(maxValue, StartId, EndId) then
-            Error(CouldnotReserveErr)
+            Error(CouldnotSuggestErr)
         else
-            for counter := StartingIDtoReserve to (StartingIDtoReserve + maxValue - 1) do begin
-                ObjectReservationJnlLine.Init();
-                ObjectReservationJnlLine."Batch Name" := '';
-                ObjectReservationJnlLine."Object Type" := ObjectReservationJnlLine."Object Type"::Codeunit;
-                ObjectReservationJnlLine.Validate("Object ID", Counter);
-                ObjectReservationJnlLine.Insert(true);
-            end;
-
+            exit(StartingIDtoReserve);
     end;
 
     local procedure CheckObjectRangeAvailability(ObjectCount: Integer; StartId: Integer; EndId: Integer): Boolean
@@ -137,28 +113,69 @@ codeunit 50100 "Object Reservation Mgmt. TAL"
         ReservedObject: Record "Reserved Object TAL";
         ObjectReservationJnlLine: Record ObjectReservationJnlLineTAL;
         AllObject: Record AllObjWithCaption;
-        LicensePermission: Record "License Permission";
 
     begin
-        //ReservedObject.SetRange("Object Type", ObjectType);
         ReservedObject.SetRange("Object ID", ObjectId);
         if not ReservedObject.IsEmpty() then
             exit(false);
         ObjectReservationJnlLine.SetRange("Object ID", ObjectId);
         if not ObjectReservationJnlLine.IsEmpty() then
             exit(false);
-        //AllObject.SetRange("Object Type", ObjectType);
         AllObject.SetRange("Object ID", ObjectId);
         if not AllObject.IsEmpty() then
             exit(false);
-        //LicensePermission.SetRange("Object Type", ObjectType);
-        // LicensePermission.SetRange("Object Number", ObjectId);
-        // if not LicensePermission.IsEmpty() then
-        //     exit(false);
+        exit(true);
+    end;
+
+    procedure CheckObjectIDAvailability(ObjectType: Enum "Object Type TAL"; ObjectId: Integer): Boolean
+    var
+        ReservedObject: Record "Reserved Object TAL";
+        ObjectReservationJnlLine: Record ObjectReservationJnlLineTAL;
+        AllObject: Record AllObjWithCaption;
+
+    begin
+        ReservedObject.SetRange("Object Type", ObjectType);
+        ReservedObject.SetRange("Object ID", ObjectId);
+        if not ReservedObject.IsEmpty() then
+            exit(false);
+        ObjectReservationJnlLine.SetRange("Object Type", ObjectType);
+        ObjectReservationJnlLine.SetRange("Object ID", ObjectId);
+        if not ObjectReservationJnlLine.IsEmpty() then
+            exit(false);
+        AllObject.SetRange("Object Type", ObjectType);
+        AllObject.SetRange("Object ID", ObjectId);
+        if not AllObject.IsEmpty() then
+            exit(false);
+
+        exit(true);
+    end;
+
+    procedure CheckObjectNameAvailability(ObjectType: Enum "Object Type TAL"; ObjectName: Text[30]): Boolean
+    var
+        ReservedObject: Record "Reserved Object TAL";
+        ObjectReservationJnlLine: Record ObjectReservationJnlLineTAL;
+        AllObject: Record AllObjWithCaption;
+
+    begin
+        ReservedObject.SetRange("Object Type", ObjectType);
+        ReservedObject.SetRange("Object Name", ObjectName);
+        if not ReservedObject.IsEmpty() then
+            exit(false);
+        ObjectReservationJnlLine.SetRange("Object Name", ObjectName);
+        if not ObjectReservationJnlLine.IsEmpty() then
+            exit(false);
+        AllObject.SetRange("Object Type", ObjectType);
+        AllObject.SetRange("Object Name", ObjectName);
+        if not AllObject.IsEmpty() then
+            exit(false);
+
         exit(true);
     end;
 
     var
         StartingIDtoReserve: Integer;
-        CouldnotReserveErr: Label 'Could not reserve the object IDs';
+        CouldnotSuggestErr: Label 'Could not suggest the object IDs', MaxLength = 30;
+        ObjectIdNotAvailableLbl: Label 'Object Id %1 is not available', Comment = 'Object Id', MaxLength = 50;
+        ObjectNameNotAvailableLbl: Label 'Object Name %1 is not available', Comment = 'Object Name', MaxLength = 30;
+
 }

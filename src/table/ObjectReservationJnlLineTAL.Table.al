@@ -39,14 +39,14 @@ table 50101 "ObjectReservationJnlLineTAL"
         }
         field(5; "Reserved By"; Code[50])
         {
-            Caption = 'Reserved By';
+            Caption = 'Created By';
             DataClassification = CustomerContent;
             TableRelation = User."User Name";
             ValidateTableRelation = false;
         }
         field(6; "Reserved Date"; DateTime)
         {
-            Caption = 'Reserved Date';
+            Caption = 'Created Date';
             DataClassification = CustomerContent;
         }
         field(7; "ID Range"; Integer)
@@ -67,11 +67,7 @@ table 50101 "ObjectReservationJnlLineTAL"
     trigger OnInsert()
     begin
         "Reserved By" := format(UserId);
-    end;
-
-    trigger OnModify()
-    begin
-
+        "Reserved Date" := CurrentDateTime;
     end;
 
     trigger OnDelete()
@@ -83,11 +79,6 @@ table 50101 "ObjectReservationJnlLineTAL"
         FieldReservationJnlLine.SetRange("Object ID", Rec."Object ID");
         if not FieldReservationJnlLine.IsEmpty() then
             FieldReservationJnlLine.DeleteAll();
-    end;
-
-    trigger OnRename()
-    begin
-
     end;
 
     var

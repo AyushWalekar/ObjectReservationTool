@@ -11,6 +11,7 @@ table 50102 "ObjectReservationJnlBatchTAL"
         {
             Caption = 'Name';
             DataClassification = CustomerContent;
+            NotBlank = true;
         }
         field(2; "Description"; Text[100])
         {
@@ -39,11 +40,6 @@ table 50102 "ObjectReservationJnlBatchTAL"
         "Assigned User ID" := format(UserId);
     end;
 
-    trigger OnModify()
-    begin
-
-    end;
-
     trigger OnDelete()
     var
         ObjectReservationJnlLine: Record ObjectReservationJnlLineTAL;
@@ -55,7 +51,9 @@ table 50102 "ObjectReservationJnlBatchTAL"
 
     trigger OnRename()
     begin
-
+        Error(BatchRenameErr);
     end;
 
+    var
+        BatchRenameErr: Label 'Renaming Batch is not allowed', MaxLength = 30;
 }

@@ -31,7 +31,7 @@ page 50101 "ObjectReservationJnlTAL"
                 begin
                     Commit();
                     CurrPage.SaveRecord();
-                    IF PAGE.RUNMODAL(0, ObjectReservJnlBatch) = ACTION::LookupOK THEN begin
+                    if PAGE.RUNMODAL(0, ObjectReservJnlBatch) = ACTION::LookupOK then begin
                         BatchName := ObjectReservJnlBatch.Name;
                         ObjectReservationMgmt.SetName(BatchName, Rec);
                     end;
@@ -63,13 +63,13 @@ page 50101 "ObjectReservationJnlTAL"
                 field("Reserved By"; Rec."Reserved By")
                 {
                     ApplicationArea = ObjectReservationAppAreaTAL;
-                    Tooltip = 'Specifies the Reserved By.';
+                    Tooltip = 'Specifies the Created By.';
                 }
 
                 field("Reserved Date"; Rec."Reserved Date")
                 {
                     ApplicationArea = ObjectReservationAppAreaTAL;
-                    Tooltip = 'Specifies the Reserved Date.';
+                    Tooltip = 'Specifies the Created Date.';
                 }
 
             }
@@ -85,12 +85,16 @@ page 50101 "ObjectReservationJnlTAL"
                 ApplicationArea = ObjectReservationAppAreaTAL;
                 ToolTip = 'Provides suggestion for object IDs based on available ranges';
                 Image = Suggest;
-                RunObject = report "Suggest Objects TAL";
 
                 trigger OnAction()
+                var
+                    ObjectReservationJnlLine: Record ObjectReservationJnlLineTAL;
+                    SuggestObjects: Report "Suggest Objects TAL";
+
                 begin
-                    // code to be added
-                    ;
+                    ObjectReservationJnlLine.SetRange("Batch Name", Rec."Batch Name");
+                    SuggestObjects.SetTableView(ObjectReservationJnlLine);
+                    SuggestObjects.RunModal();
                 end;
             }
             action(Reserve)
@@ -115,17 +119,32 @@ page 50101 "ObjectReservationJnlTAL"
                 ApplicationArea = ObjectReservationAppAreaTAL;
                 ToolTip = 'Reserve fields for current object';
                 Image = Reserve;
-                RunObject = page "Field Reserv. Jnl Line TAL";
-                RunPageLink = "Batch Name" = field("Batch Name"), "Object Type" = field("Object Type"), "Object ID" = field("Object ID");
+
+                trigger OnAction()
+                var
+                    FieldReservationJnlLine: Record FieldReservationJnlLineTAL;
+                begin
+                    if (Rec."Object Type" = Rec."Object Type"::Table) or (Rec."Object Type" = Rec."Object Type"::"Table Extension") then begin
+                        FieldReservationJnlLine.SetRange("Batch Name", rec."Batch Name");
+                        FieldReservationJnlLine.SetRange("Object Type", rec."Object Type");
+                        FieldReservationJnlLine.SetRange("Object ID", rec."Object ID");
+                        Page.Run(Page::"Field Reserv. Jnl Line TAL", FieldReservationJnlLine);
+                    end else
+                        Error(FieldReservationErr);
+
+                end;
             }
         }
     }
     trigger OnOpenPage()
+    var
+        ObjectReservationJnlBatch: Record ObjectReservationJnlBatchTAL;
     begin
-        //to be done
-
         if IsOpenedFromBatch() then
-            BatchName := Rec."Batch Name";
+            BatchName := Rec."Batch Name"
+        else
+            if ObjectReservationJnlBatch.FindFirst() then
+                BatchName := ObjectReservationJnlBatch.Name;
         ObjectReservationMgmt.SetName(BatchName, Rec);
     end;
 
@@ -145,6 +164,7 @@ page 50101 "ObjectReservationJnlTAL"
     var
         ObjectReservationMgmt: Codeunit "Object Reservation Mgmt. TAL";
         BatchName: Code[20];
+        FieldReservationErr: Label 'Fields can only be reserved for table and table extension', maxlength = 50;
 
 
 }

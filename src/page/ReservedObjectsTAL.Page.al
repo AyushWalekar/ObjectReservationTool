@@ -103,14 +103,22 @@ page 50100 "Reserved Objects TAL"
                 Caption = 'Reserved Fields';
                 Image = Reserve;
                 ToolTip = 'Reserved Fields ID for the Object';
-                RunObject = Page "Reserved Fields TAL";
-                RunPageLink = "Object ID" = field("Object ID"), "Object Type" = field("Object Type");
-                trigger onAction()
+                trigger OnAction()
+                var
+                    "Reserved Field": Record "Reserved Field TAL";
                 begin
+                    if (Rec."Object Type" = Rec."Object Type"::Table) or (Rec."Object Type" = Rec."Object Type"::"Table Extension") then begin
 
+                        "Reserved Field".SetRange("Object Type", rec."Object Type");
+                        "Reserved Field".SetRange("Object ID", rec."Object ID");
+                        Page.Run(Page::"Reserved Fields TAL", "Reserved Field");
+                    end else
+                        Error(ReservedFieldErr);
                 end;
             }
         }
     }
+    var
+        ReservedFieldErr: Label 'Fields are only reserved for Table and Table Extension', maxlength = 50;
 
 }

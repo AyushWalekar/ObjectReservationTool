@@ -9,7 +9,7 @@ report 50100 "Suggest Objects TAL"
     {
         dataitem(ObjectReservationJnlLine; ObjectReservationJnlLineTAL)
         {
-            RequestFilterFields = "ID Range";
+            RequestFilterFields = "ID Range", "Batch Name";
         }
     }
     requestpage
@@ -109,20 +109,44 @@ report 50100 "Suggest Objects TAL"
     trigger OnPreReport()
     begin
         Text := ObjectReservationJnlLine.GetFilter("ID Range");
+        BatchName := ObjectReservationJnlLine.GetFilter("Batch Name");
         if Text = '' then
             Error(IdRangeMissingLbl);
+        if BatchName = '' then
+            Error(BatchNameBlankLbl);
 
         Evaluate(StartId, CopyStr(Text, 1, Text.LastIndexOf('.') - 2));
         Evaluate(EndId, CopyStr(Text, Text.LastIndexOf('.') + 1), StrLen(Text));
 
-        ObjectReservationMgmt.SuggestObjects(ObjectCount, StartId, EndId);
+        StartingIdToReserve := ObjectReservationMgmt.SuggestObjects(ObjectCount, StartId, EndId);
+        CreateObjectReservationJnlEntry();
+    end;
+
+    local procedure CreateObjectReservationJnlEntry()
+    var
+        ObjectReservationJnlLineRec: Record ObjectReservationJnlLineTAL;
+        counter: Integer;
+        counter1: Integer;
+
+    begin
+        for counter := 1 to System.ArrayLen(ObjectCount) do
+            for counter1 := StartingIDtoReserve to (StartingIdToReserve + ObjectCount[counter] - 1) do begin
+                ObjectReservationJnlLineRec.Init();
+                ObjectReservationJnlLineRec."Batch Name" := CopyStr(BatchName, 1, MaxStrLen(ObjectReservationJnlLineRec."Batch Name"));
+                ObjectReservationJnlLineRec."Object Type" := Enum::"Object Type TAL".FromInteger(Counter - 1);
+                ObjectReservationJnlLineRec."Object ID" := counter1;
+                ObjectReservationJnlLineRec.Insert(true);
+            end;
     end;
 
     var
         ObjectReservationMgmt: Codeunit "Object Reservation Mgmt. TAL";
         ObjectCount: array[12] of Integer;
         IdRangeMissingLbl: Label 'ID Range can not be blank', MaxLength = 30;
+        BatchNameBlankLbl: Label 'Batch Name can not be blank', MaxLength = 30;
         StartId: Integer;
         EndId: Integer;
         Text: text;
+        BatchName: Text;
+        StartingIdToReserve: Integer;
 }
