@@ -11,19 +11,19 @@ page 50102 "Object Reserv. Jnl Batch TAL"
             repeater(Group)
             {
 
-                field("Name"; "Name")
+                field("Name"; Rec."Name")
                 {
                     ApplicationArea = ObjectReservationAppAreaTAL;
                     Tooltip = 'Specifies the Name.';
                 }
 
-                field("Description"; "Description")
+                field("Description"; Rec."Description")
                 {
                     ApplicationArea = ObjectReservationAppAreaTAL;
                     Tooltip = 'Specifies the Description.';
                 }
 
-                field("Assigned User ID"; "Assigned User ID")
+                field("Assigned User ID"; Rec."Assigned User ID")
                 {
                     ApplicationArea = ObjectReservationAppAreaTAL;
                     Tooltip = 'Specifies the Assigned User ID".';

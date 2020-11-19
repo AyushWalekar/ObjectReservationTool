@@ -16,31 +16,31 @@ page 50100 "Reserved Objects TAL"
             repeater(Group)
             {
 
-                field("Object Type"; "Object Type")
+                field("Object Type"; Rec."Object Type")
                 {
                     ApplicationArea = ObjectReservationAppAreaTAL;
                     Tooltip = 'Specifies the Object Type.';
                 }
 
-                field("Object ID"; "Object ID")
+                field("Object ID"; Rec."Object ID")
                 {
                     ApplicationArea = ObjectReservationAppAreaTAL;
                     Tooltip = 'Specifies the Object ID.';
                 }
 
-                field("Object Name"; "Object Name")
+                field("Object Name"; Rec."Object Name")
                 {
                     ApplicationArea = ObjectReservationAppAreaTAL;
                     Tooltip = 'Specifies the Object Name.';
                 }
 
-                field("Reserved By"; "Reserved By")
+                field("Reserved By"; Rec."Reserved By")
                 {
                     ApplicationArea = ObjectReservationAppAreaTAL;
                     Tooltip = 'Specifies the Reserved By.';
                 }
 
-                field("Reserved Date"; "Reserved Date")
+                field("Reserved Date"; Rec."Reserved Date")
                 {
                     ApplicationArea = ObjectReservationAppAreaTAL;
                     Tooltip = 'Specifies the Reserved Date.';
@@ -61,11 +61,10 @@ page 50100 "Reserved Objects TAL"
                 Promoted = true;
                 PromotedCategory = Process;
                 ToolTip = 'Create Reseravation';
+                RunObject = page ObjectReservationJnlTAL;
                 trigger OnAction()
-                var
-                    ObjectResJnl: Page ObjectReservationJnlTAL;
                 begin
-                    ObjectResJnl.Run();
+
                 end;
             }
             action(Release)
@@ -92,11 +91,10 @@ page 50100 "Reserved Objects TAL"
                 Caption = 'Batches';
                 Image = Description;
                 ToolTip = 'Available Batches';
+                RunObject = page "Object Reserv. Jnl Batch TAL";
                 trigger OnAction()
-                var
-                    ObjectReservJnlBatch: Page "Object Reserv. Jnl Batch TAL";
                 begin
-                    ObjectReservJnlBatch.Run();
+
                 end;
             }
             action("Reserved Fields")
@@ -107,6 +105,10 @@ page 50100 "Reserved Objects TAL"
                 ToolTip = 'Reserved Fields ID for the Object';
                 RunObject = Page "Reserved Fields TAL";
                 RunPageLink = "Object ID" = field("Object ID"), "Object Type" = field("Object Type");
+                trigger onAction()
+                begin
+
+                end;
             }
         }
     }

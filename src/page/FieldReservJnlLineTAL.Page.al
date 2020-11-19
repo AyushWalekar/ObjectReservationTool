@@ -12,39 +12,39 @@ page 50104 "Field Reserv. Jnl Line TAL"
             repeater(Group)
             {
 
-                field("Object Type"; "Object Type")
+                field("Object Type"; Rec."Object Type")
                 {
                     ApplicationArea = ObjectReservationAppAreaTAL;
                     Tooltip = 'Specifies the Object Type.';
                     Editable = False;
                 }
 
-                field("Object ID"; "Object ID")
+                field("Object ID"; Rec."Object ID")
                 {
                     ApplicationArea = ObjectReservationAppAreaTAL;
                     Tooltip = 'Specifies the Object ID.';
                     Editable = False;
                 }
 
-                field("Field ID"; "Field ID")
+                field("Field ID"; Rec."Field ID")
                 {
                     ApplicationArea = ObjectReservationAppAreaTAL;
                     Tooltip = 'Specifies the Field ID.';
                 }
 
-                field("Field Name"; "Field Name")
+                field("Field Name"; Rec."Field Name")
                 {
                     ApplicationArea = ObjectReservationAppAreaTAL;
                     Tooltip = 'Specifies the Field Name.';
                 }
 
-                field("Reserved By"; "Reserved By")
+                field("Reserved By"; Rec."Reserved By")
                 {
                     ApplicationArea = ObjectReservationAppAreaTAL;
                     Tooltip = 'Specifies the Reserved By.';
                 }
 
-                field("Reserved Date"; "Reserved Date")
+                field("Reserved Date"; Rec."Reserved Date")
                 {
                     ApplicationArea = ObjectReservationAppAreaTAL;
                     Tooltip = 'Specifies the Reserved Date.';
