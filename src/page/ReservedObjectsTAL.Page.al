@@ -74,8 +74,8 @@ page 50100 "Reserved Objects TAL"
                 ToolTip = 'Release The Selected Object';
                 trigger OnAction()
                 var
-                    ObjectReservationMgmt: Codeunit "Object Reservation Mgmt. TAL";
                     Rec2: Record "Reserved Object TAL";
+                    ObjectReservationMgmt: Codeunit "Object Reservation Mgmt. TAL";
                 begin
                     CurrPage.SetSelectionFilter(Rec2);
                     if Rec2.Count > 0 then
