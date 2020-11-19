@@ -49,4 +49,40 @@ codeunit 50100 "Object Reservation Mgmt. TAL"
             until FieldReservationJnlLine.Next() = 0;
         FieldReservationJnlLine.DeleteAll();
     end;
+
+    procedure SetName(BatchName: Code[20]; var ObjectReservJnlLine: Record ObjectReservationJnlLineTAL)
+    begin
+        ObjectReservJnlLine.FilterGroup := 2;
+        ObjectReservJnlLine.SetRange("Batch Name", BatchName);
+        ObjectReservJnlLine.FilterGroup := 0;
+        if ObjectReservJnlLine.FindSet() then;
+    end;
+
+    procedure ValidateObjectID(ObjectType: Enum "Object Type TAL"; ObjectID: Integer)
+    var
+
+    begin
+
+    end;
+
+    procedure ValidateObjectName(ObjectType: Enum "Object Type TAL"; ObjectName: Text[30])
+    var
+
+    begin
+
+    end;
+
+    procedure ValidateFieldID(ObjectType: enum "Object Type TAL"; ObjectID: Integer; FieldID: Integer)
+    var
+
+    begin
+
+    end;
+
+    procedure ValidateFieldName()
+    var
+
+    begin
+
+    end;
 }

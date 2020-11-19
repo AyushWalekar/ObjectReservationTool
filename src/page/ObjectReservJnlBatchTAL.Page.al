@@ -1,6 +1,6 @@
 page 50102 "Object Reserv. Jnl Batch TAL"
 {
-    Caption = 'Object Reservation Journal Batch';
+    Caption = 'Object Reservation Journal Batches';
     PageType = List;
     SourceTable = "ObjectReservationJnlBatchTAL";
     layout
@@ -46,8 +46,17 @@ page 50102 "Object Reserv. Jnl Batch TAL"
                 PromotedIsBig = true;
                 ShortCutKey = 'Return';
                 ToolTip = 'Open a journal based on the journal batch.';
-                RunObject = Page ObjectReservationJnlTAL;
-                RunPageLink = "Batch Name" = field(Name);
+                trigger onAction()
+                var
+                    ObjectReservationJnlLine: Record ObjectReservationJnlLineTAL;
+                begin
+                    ObjectReservationJnlLine.FilterGroup := 2;
+                    ObjectReservationJnlLine.SetRange("Batch Name", Rec.Name);
+                    ObjectReservationJnlLine.FilterGroup := 0;
+                    ObjectReservationJnlLine."Batch Name" := Rec.Name;
+
+                    Page.Run(0, ObjectReservationJnlLine);
+                end;
             }
         }
     }

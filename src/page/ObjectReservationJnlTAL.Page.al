@@ -3,7 +3,6 @@ page 50101 "ObjectReservationJnlTAL"
     Caption = 'Object Reservation Journal';
     PageType = Worksheet;
     SourceTable = "ObjectReservationJnlLineTAL";
-    DelayedInsert = true;
     UsageCategory = Lists;
     ApplicationArea = ObjectReservationAppAreaTAL;
 
@@ -17,6 +16,28 @@ page 50101 "ObjectReservationJnlTAL"
                 Caption = 'Batch Name';
                 ApplicationArea = ObjectReservationAppAreaTAL;
                 Tooltip = 'Specifies the Batch Name.';
+                Lookup = true;
+
+                trigger OnValidate()
+                begin
+                    BatchNameOnAfterValidate();
+                end;
+
+
+                trigger OnLookup(var Text: Text): Boolean
+                var
+                    ObjectReservJnlBatch: Record ObjectReservationJnlBatchTAL;
+
+                begin
+                    Commit();
+                    CurrPage.SaveRecord();
+                    IF PAGE.RUNMODAL(0, ObjectReservJnlBatch) = ACTION::LookupOK THEN begin
+                        BatchName := ObjectReservJnlBatch.Name;
+                        ObjectReservationMgmt.SetName(BatchName, Rec);
+                    end;
+                    CurrPage.Update(false);
+
+                end;
             }
 
             repeater(Group)
@@ -102,10 +123,26 @@ page 50101 "ObjectReservationJnlTAL"
     begin
         //to be done
 
+        if IsOpenedFromBatch() then
+            BatchName := Rec."Batch Name";
+        ObjectReservationMgmt.SetName(BatchName, Rec);
     end;
 
+    local procedure BatchNameOnAfterValidate()
+    begin
+        CurrPage.SaveRecord();
+        ObjectReservationMgmt.SetName(BatchName, Rec);
+        CurrPage.Update();
+
+    end;
+
+    procedure IsOpenedFromBatch(): boolean
+    begin
+        exit(Rec."Batch Name" <> '')
+    end;
 
     var
+        ObjectReservationMgmt: Codeunit "Object Reservation Mgmt. TAL";
         BatchName: Code[20];
 
 

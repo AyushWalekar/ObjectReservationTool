@@ -23,11 +23,19 @@ table 50101 "ObjectReservationJnlLineTAL"
         {
             Caption = 'Object ID';
             DataClassification = CustomerContent;
+            trigger OnValidate()
+            begin
+                ObjectReservationMgmt.ValidateObjectID("Object Type", "Object ID");
+            end;
         }
         field(4; "Object Name"; Text[30])
         {
             Caption = 'Object Name';
             DataClassification = CustomerContent;
+            trigger OnValidate()
+            begin
+                ObjectReservationMgmt.ValidateObjectName("Object Type", "Object Name");
+            end;
         }
         field(5; "Reserved By"; Code[50])
         {
@@ -76,5 +84,8 @@ table 50101 "ObjectReservationJnlLineTAL"
     begin
 
     end;
+
+    var
+        ObjectReservationMgmt: Codeunit "Object Reservation Mgmt. TAL";
 
 }

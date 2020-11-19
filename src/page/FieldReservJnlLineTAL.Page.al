@@ -30,6 +30,12 @@ page 50104 "Field Reserv. Jnl Line TAL"
                 {
                     ApplicationArea = ObjectReservationAppAreaTAL;
                     Tooltip = 'Specifies the Field ID.';
+
+                    trigger OnValidate()
+                    begin
+                        //ObjectReservationMgmt.ValidateFieldID("Object Type", "Object ID", "Field ID");
+                    end;
+
                 }
 
                 field("Field Name"; Rec."Field Name")
@@ -53,5 +59,7 @@ page 50104 "Field Reserv. Jnl Line TAL"
             }
         }
     }
+    var
+        ObjectReservationMgmt: Codeunit "Object Reservation Mgmt. TAL";
 
 }
