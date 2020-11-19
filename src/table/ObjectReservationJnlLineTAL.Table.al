@@ -65,6 +65,7 @@ table 50101 "ObjectReservationJnlLineTAL"
     var
         FieldReservationJnlLine: Record FieldReservationJnlLineTAL;
     begin
+        FieldReservationJnlLine.SetRange("Batch Name", rec."Batch Name");
         FieldReservationJnlLine.SetRange("Object Type", Rec."Object Type");
         FieldReservationJnlLine.SetRange("Object ID", Rec."Object ID");
         if not FieldReservationJnlLine.IsEmpty() then
