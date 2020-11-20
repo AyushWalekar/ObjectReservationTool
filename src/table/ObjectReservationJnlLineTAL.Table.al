@@ -12,6 +12,7 @@ table 50101 "ObjectReservationJnlLineTAL"
             Caption = 'Batch Name';
             DataClassification = CustomerContent;
             TableRelation = ObjectReservationJnlBatchTAL.Name;
+            NotBlank = true;
         }
 
         field(2; "Object Type"; Enum "Object Type TAL")
@@ -25,7 +26,8 @@ table 50101 "ObjectReservationJnlLineTAL"
             DataClassification = CustomerContent;
             trigger OnValidate()
             begin
-                ObjectReservationMgmt.ValidateObjectID("Object Type", "Object ID");
+                if ObjectReservationMgmt.IsIdValid("Object ID") then
+                    ObjectReservationMgmt.ValidateObjectID("Object Type", "Object ID");
             end;
         }
         field(4; "Object Name"; Text[30])

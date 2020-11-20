@@ -3,6 +3,7 @@ page 50104 "Field Reserv. Jnl Line TAL"
     Caption = 'Field Reservation Journal Line';
     PageType = List;
     SourceTable = "FieldReservationJnlLineTAL";
+    DelayedInsert = true;
 
     layout
     {

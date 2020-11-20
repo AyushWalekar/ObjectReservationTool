@@ -26,6 +26,13 @@ table 50104 "FieldReservationJnlLineTAL"
         {
             Caption = 'Field ID';
             DataClassification = CustomerContent;
+
+            trigger OnValidate()
+            var
+            ObjectReservationMgmt: Codeunit "Object Reservation Mgmt. TAL";
+            begin
+                ObjectReservationMgmt.IsIdValid("Field ID");
+            end;
         }
         field(5; "Field Name"; Text[30])
         {
