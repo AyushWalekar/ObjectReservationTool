@@ -24,11 +24,11 @@ page 50107 "ObjectReservationActivitiesTAL"
                     DrillDownPageId = ObjectReservationJnlTAL;
                     ToolTip = 'This will show all objects that are currently present on Object Reservation Journal';
                 }
-                field("Number of Batches"; Rec."Number of Batches")
+                field("Number of Projects"; Rec."Number of Projects")
                 {
                     ApplicationArea = ObjectReservationAppAreaTAL;
-                    DrillDownPageId = "Object Reserv. Jnl Batch TAL";
-                    ToolTip = 'This will show all the batches that can be used on Object Reservation Journal';
+                    DrillDownPageId = "Object Reserv. Project TAL";
+                    ToolTip = 'This will show all the projects that can be used on Object Reservation Journal';
                 }
             }
         }

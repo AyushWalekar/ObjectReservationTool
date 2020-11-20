@@ -12,29 +12,29 @@ page 50101 "ObjectReservationJnlTAL"
 
         area(content)
         {
-            field("Batch Name"; BatchName)
+            field("Project Code"; ProjectCode)
             {
-                Caption = 'Batch Name';
+                Caption = 'Project Code';
                 ApplicationArea = ObjectReservationAppAreaTAL;
-                Tooltip = 'Specifies the Batch Name.';
+                Tooltip = 'Specifies the Project Code.';
                 Lookup = true;
 
                 trigger OnValidate()
                 begin
-                    BatchNameOnAfterValidate();
+                    ProjectCodeOnAfterValidate();
                 end;
 
 
                 trigger OnLookup(var Text: Text): Boolean
                 var
-                    ObjectReservJnlBatch: Record ObjectReservationJnlBatchTAL;
+                    ObjectReservJnlBatch: Record "ObjectReservationProjectTAL";
 
                 begin
                     Commit();
                     CurrPage.SaveRecord();
                     if PAGE.RUNMODAL(0, ObjectReservJnlBatch) = ACTION::LookupOK then begin
-                        BatchName := ObjectReservJnlBatch.Name;
-                        ObjectReservationMgmt.SetName(BatchName, Rec);
+                        ProjectCode := ObjectReservJnlBatch.Name;
+                        ObjectReservationMgmt.SetName(ProjectCode, Rec);
                     end;
                     CurrPage.Update(false);
 
@@ -93,7 +93,7 @@ page 50101 "ObjectReservationJnlTAL"
                     SuggestObjects: Report "Suggest Objects TAL";
 
                 begin
-                    ObjectReservationJnlLine.SetRange("Batch Name", Rec."Batch Name");
+                    ObjectReservationJnlLine.SetRange("Project Code", Rec."Project Code");
                     SuggestObjects.SetTableView(ObjectReservationJnlLine);
                     SuggestObjects.RunModal();
                 end;
@@ -109,7 +109,7 @@ page 50101 "ObjectReservationJnlTAL"
                     ObjectReservationMgmt: Codeunit "Object Reservation Mgmt. TAL";
                 begin
                     ObjectReservationMgmt.ReserveJournal(Rec);
-                    
+
                 end;
             }
 
@@ -127,7 +127,7 @@ page 50101 "ObjectReservationJnlTAL"
                     FieldReservationJnlLine: Record FieldReservationJnlLineTAL;
                 begin
                     if (Rec."Object Type" = Rec."Object Type"::Table) or (Rec."Object Type" = Rec."Object Type"::"Table Extension") then begin
-                        FieldReservationJnlLine.SetRange("Batch Name", rec."Batch Name");
+                        FieldReservationJnlLine.SetRange("Project Code", rec."Project Code");
                         FieldReservationJnlLine.SetRange("Object Type", rec."Object Type");
                         FieldReservationJnlLine.SetRange("Object ID", rec."Object ID");
                         Page.Run(Page::"Field Reserv. Jnl Line TAL", FieldReservationJnlLine);
@@ -140,32 +140,32 @@ page 50101 "ObjectReservationJnlTAL"
     }
     trigger OnOpenPage()
     var
-        ObjectReservationJnlBatch: Record ObjectReservationJnlBatchTAL;
+        ObjectReservationJnlBatch: Record "ObjectReservationProjectTAL";
     begin
-        if IsOpenedFromBatch() then
-            BatchName := Rec."Batch Name"
+        if IsOpenedFromProject() then
+            ProjectCode := Rec."Project Code"
         else
             if ObjectReservationJnlBatch.FindFirst() then
-                BatchName := ObjectReservationJnlBatch.Name;
-        ObjectReservationMgmt.SetName(BatchName, Rec);
+                ProjectCode := ObjectReservationJnlBatch.Name;
+        ObjectReservationMgmt.SetName(ProjectCode, Rec);
     end;
 
-    local procedure BatchNameOnAfterValidate()
+    local procedure ProjectCodeOnAfterValidate()
     begin
         CurrPage.SaveRecord();
-        ObjectReservationMgmt.SetName(BatchName, Rec);
+        ObjectReservationMgmt.SetName(ProjectCode, Rec);
         CurrPage.Update();
 
     end;
 
-    procedure IsOpenedFromBatch(): boolean
+    procedure IsOpenedFromProject(): boolean
     begin
-        exit(Rec."Batch Name" <> '')
+        exit(Rec."Project Code" <> '')
     end;
 
     var
         ObjectReservationMgmt: Codeunit "Object Reservation Mgmt. TAL";
-        BatchName: Code[20];
+        ProjectCode: Code[20];
         FieldReservationErr: Label 'Fields can only be reserved for table and table extension', maxlength = 50;
 
 

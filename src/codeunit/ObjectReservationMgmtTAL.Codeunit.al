@@ -28,7 +28,7 @@ codeunit 50100 "Object Reservation Mgmt. TAL"
                 ReservedObject.TransferFields(ObjectReservationJnlLine);
                 ReservedObject.Insert();
             until ObjectReservationJnlLine.Next() = 0;
-            ReserveFields(ObjectReservationJnlLine."Batch Name");
+            ReserveFields(ObjectReservationJnlLine."Project Code");
             ObjectReservationJnlLine.DeleteAll();
             Message(ObjectsReservedLbl);
         end else
@@ -41,7 +41,7 @@ codeunit 50100 "Object Reservation Mgmt. TAL"
         ReservedField: Record "Reserved Field TAL";
         FieldReservationJnlLine: Record FieldReservationJnlLineTAL;
     begin
-        FieldReservationJnlLine.SetRange("Batch Name", BatchName);
+        FieldReservationJnlLine.SetRange("Project Code", BatchName);
         if FieldReservationJnlLine.FindSet() then
             repeat
                 ReservedField.Init();
@@ -54,7 +54,7 @@ codeunit 50100 "Object Reservation Mgmt. TAL"
     procedure SetName(BatchName: Code[20]; var ObjectReservJnlLine: Record ObjectReservationJnlLineTAL)
     begin
         ObjectReservJnlLine.FilterGroup := 2;
-        ObjectReservJnlLine.SetRange("Batch Name", BatchName);
+        ObjectReservJnlLine.SetRange("Project Code", BatchName);
         ObjectReservJnlLine.FilterGroup := 0;
         if ObjectReservJnlLine.FindSet() then;
     end;

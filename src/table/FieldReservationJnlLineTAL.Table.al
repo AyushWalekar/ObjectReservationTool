@@ -7,9 +7,9 @@ table 50104 "FieldReservationJnlLineTAL"
 
     fields
     {
-        field(1; "Batch Name"; Code[20])
+        field(1; "Project Code"; Code[20])
         {
-            Caption = 'Batch Name';
+            Caption = 'Project Code';
             DataClassification = CustomerContent;
         }
         field(2; "Object Type"; Enum "Object Type TAL")
@@ -55,7 +55,7 @@ table 50104 "FieldReservationJnlLineTAL"
 
     keys
     {
-        key(PK; "Batch Name", "Object Type", "Object ID", "Field ID")
+        key(PK; "Project Code", "Object Type", "Object ID", "Field ID")
         {
             Clustered = true;
         }

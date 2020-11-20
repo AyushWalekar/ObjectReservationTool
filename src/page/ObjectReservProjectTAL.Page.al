@@ -1,8 +1,8 @@
-page 50102 "Object Reserv. Jnl Batch TAL"
+page 50102 "Object Reserv. Project TAL"
 {
-    Caption = 'Object Reservation Journal Batches';
+    Caption = 'Object Reservation Projects';
     PageType = List;
-    SourceTable = "ObjectReservationJnlBatchTAL";
+    SourceTable = "ObjectReservationProjectTAL";
     layout
     {
 
@@ -45,15 +45,15 @@ page 50102 "Object Reserv. Jnl Batch TAL"
                 PromotedCategory = Process;
                 PromotedIsBig = true;
                 ShortCutKey = 'Return';
-                ToolTip = 'Open a journal based on the journal batch.';
+                ToolTip = 'Open a journal based on the project';
                 trigger onAction()
                 var
                     ObjectReservationJnlLine: Record ObjectReservationJnlLineTAL;
                 begin
                     ObjectReservationJnlLine.FilterGroup := 2;
-                    ObjectReservationJnlLine.SetRange("Batch Name", Rec.Name);
+                    ObjectReservationJnlLine.SetRange("Project Code", Rec.Name);
                     ObjectReservationJnlLine.FilterGroup := 0;
-                    ObjectReservationJnlLine."Batch Name" := Rec.Name;
+                    ObjectReservationJnlLine."Project Code" := Rec.Name;
 
                     Page.Run(0, ObjectReservationJnlLine);
                 end;
@@ -62,11 +62,11 @@ page 50102 "Object Reserv. Jnl Batch TAL"
     }
     trigger OnDeleteRecord(): Boolean
     begin
-        if not Confirm(StrSubstNo(ConfirmBatchDeleteLbl, Rec.Name), true) then
+        if not Confirm(StrSubstNo(ConfirmProjectDeleteLbl, Rec.Name), true) then
             exit(false);
     end;
 
     var
-        ConfirmBatchDeleteLbl: Label 'This will delete the Object Reservation Journal Lines associated to Batch %1', Comment = '%1 = Batch Name', MaxLength = 80;
+        ConfirmProjectDeleteLbl: Label 'This will delete the Object Reservation Journal Lines associated to Project %1', Comment = '%1 = Project Code', MaxLength = 80;
 
 }

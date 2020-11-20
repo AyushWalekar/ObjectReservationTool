@@ -7,11 +7,11 @@ table 50101 "ObjectReservationJnlLineTAL"
 
     fields
     {
-        field(1; "Batch Name"; Code[20])
+        field(1; "Project Code"; Code[20])
         {
-            Caption = 'Batch Name';
+            Caption = 'Project Code';
             DataClassification = CustomerContent;
-            TableRelation = ObjectReservationJnlBatchTAL.Name;
+            TableRelation = "ObjectReservationProjectTAL".Name;
             NotBlank = true;
         }
 
@@ -60,7 +60,7 @@ table 50101 "ObjectReservationJnlLineTAL"
 
     keys
     {
-        key(PK; "Batch Name", "Object Type", "Object ID")
+        key(PK; "Project Code", "Object Type", "Object ID")
         {
             Clustered = true;
         }
@@ -76,7 +76,7 @@ table 50101 "ObjectReservationJnlLineTAL"
     var
         FieldReservationJnlLine: Record FieldReservationJnlLineTAL;
     begin
-        FieldReservationJnlLine.SetRange("Batch Name", rec."Batch Name");
+        FieldReservationJnlLine.SetRange("Project Code", rec."Project Code");
         FieldReservationJnlLine.SetRange("Object Type", Rec."Object Type");
         FieldReservationJnlLine.SetRange("Object ID", Rec."Object ID");
         if not FieldReservationJnlLine.IsEmpty() then

@@ -85,13 +85,13 @@ page 50100 "Reserved Objects TAL"
         }
         area(Navigation)
         {
-            action(Batches)
+            action(Projects)
             {
                 ApplicationArea = ObjectReservationAppAreaTAL;
-                Caption = 'Batches';
+                Caption = 'Projects';
                 Image = Description;
-                ToolTip = 'Available Batches';
-                RunObject = page "Object Reserv. Jnl Batch TAL";
+                ToolTip = 'Available Projects';
+                RunObject = page "Object Reserv. Project TAL";
                 trigger OnAction()
                 begin
 

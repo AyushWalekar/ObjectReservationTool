@@ -1,9 +1,9 @@
-table 50102 "ObjectReservationJnlBatchTAL"
+table 50102 "ObjectReservationProjectTAL"
 {
-    Caption = 'Object Reservation Journal Batch';
+    Caption = 'Object Reservation Project';
     DataClassification = CustomerContent;
-    LookupPageId = "Object Reserv. Jnl Batch TAL";
-    DrillDownPageId = "Object Reserv. Jnl Batch TAL";
+    LookupPageId = "Object Reserv. Project TAL";
+    DrillDownPageId = "Object Reserv. Project TAL";
 
     fields
     {
@@ -44,16 +44,16 @@ table 50102 "ObjectReservationJnlBatchTAL"
     var
         ObjectReservationJnlLine: Record ObjectReservationJnlLineTAL;
     begin
-        ObjectReservationJnlLine.SetRange("Batch Name", Rec.Name);
+        ObjectReservationJnlLine.SetRange("Project Code", Rec.Name);
         if not ObjectReservationJnlLine.IsEmpty() then
             ObjectReservationJnlLine.DeleteAll(true);
     end;
 
     trigger OnRename()
     begin
-        Error(BatchRenameErr);
+        Error(ProjectRenameErr);
     end;
 
     var
-        BatchRenameErr: Label 'Renaming Batch is not allowed', MaxLength = 30;
+        ProjectRenameErr: Label 'Renaming Project is not allowed', MaxLength = 30;
 }

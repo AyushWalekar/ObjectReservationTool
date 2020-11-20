@@ -41,12 +41,12 @@ page 50105 "ObjectReservationRoleCenterTAL"
                     RunObject = Page ObjectReservationJnlTAL;
                     ToolTip = 'Show all objects that are currently present on Object Reservation Journal';
                 }
-                action("Object Reservation Batch")
+                action("Object Reservation Project")
                 {
-                    Caption = 'Object Reservation Batch';
+                    Caption = 'Object Reservation Project';
                     ApplicationArea = ObjectReservationAppAreaTAL;
-                    RunObject = Page "Object Reserv. Jnl Batch TAL";
-                    ToolTip = 'Show all batches related to Object Reservation';
+                    RunObject = Page "Object Reserv. Project TAL";
+                    ToolTip = 'Show all projects related to Object Reservation';
                 }
             }
             group(SuggestObjectIds)

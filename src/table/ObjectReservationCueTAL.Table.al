@@ -21,11 +21,11 @@ table 50105 "ObjectReservationCueTAL"
             FieldClass = FlowField;
             CalcFormula = count(ObjectReservationJnlLineTAL);
         }
-        field(4; "Number of Batches"; Integer)
+        field(4; "Number of Projects"; Integer)
         {
-            Caption = 'Number of Batches';
+            Caption = 'Number of Projects';
             FieldClass = FlowField;
-            CalcFormula = count(ObjectReservationJnlBatchTAL);
+            CalcFormula = count("ObjectReservationProjectTAL");
         }
     }
 

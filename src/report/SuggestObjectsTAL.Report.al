@@ -9,7 +9,7 @@ report 50100 "Suggest Objects TAL"
     {
         dataitem(ObjectReservationJnlLine; ObjectReservationJnlLineTAL)
         {
-            RequestFilterFields = "ID Range", "Batch Name";
+            RequestFilterFields = "ID Range", "Project Code";
         }
     }
     requestpage
@@ -109,7 +109,7 @@ report 50100 "Suggest Objects TAL"
     trigger OnPreReport()
     begin
         Text := ObjectReservationJnlLine.GetFilter("ID Range");
-        BatchName := ObjectReservationJnlLine.GetFilter("Batch Name");
+        BatchName := ObjectReservationJnlLine.GetFilter("Project Code");
         if Text = '' then
             Error(IdRangeMissingLbl);
         if BatchName = '' then
@@ -134,7 +134,7 @@ report 50100 "Suggest Objects TAL"
         for counter := 1 to System.ArrayLen(ObjectCount) do
             for counter1 := StartingIDtoReserve to (StartingIdToReserve + ObjectCount[counter] - 1) do begin
                 ObjectReservationJnlLineRec.Init();
-                ObjectReservationJnlLineRec."Batch Name" := CopyStr(BatchName, 1, MaxStrLen(ObjectReservationJnlLineRec."Batch Name"));
+                ObjectReservationJnlLineRec."Project Code" := CopyStr(BatchName, 1, MaxStrLen(ObjectReservationJnlLineRec."Project Code"));
                 ObjectReservationJnlLineRec."Object Type" := Enum::"Object Type TAL".FromInteger(Counter - 1);
                 ObjectReservationJnlLineRec."Object ID" := counter1;
                 ObjectReservationJnlLineRec.Insert(true);
