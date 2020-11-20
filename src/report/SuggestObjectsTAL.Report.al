@@ -1,6 +1,6 @@
 report 50100 "Suggest Objects TAL"
 {
-    Caption = 'Suggest Objects';
+    Caption = 'Suggest Object IDs';
     UsageCategory = Administration;
     ApplicationArea = All;
     ProcessingOnly = true;
@@ -120,6 +120,8 @@ report 50100 "Suggest Objects TAL"
 
         StartingIdToReserve := ObjectReservationMgmt.SuggestObjects(ObjectCount, StartId, EndId);
         CreateObjectReservationJnlEntry();
+
+        Message(RecordsInsertedLbl);
     end;
 
     local procedure CreateObjectReservationJnlEntry()
@@ -149,4 +151,5 @@ report 50100 "Suggest Objects TAL"
         Text: text;
         BatchName: Text;
         StartingIdToReserve: Integer;
+        RecordsInsertedLbl: Label 'Records Inserted in Object Reservation Journal', MaxLength = 30;
 }

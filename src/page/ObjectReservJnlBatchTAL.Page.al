@@ -62,11 +62,11 @@ page 50102 "Object Reserv. Jnl Batch TAL"
     }
     trigger OnDeleteRecord(): Boolean
     begin
-        if not Confirm(StrSubstNo(ConfirmBatchDelete, Rec.Name), true) then
+        if not Confirm(StrSubstNo(ConfirmBatchDeleteLbl, Rec.Name), true) then
             exit(false);
     end;
 
     var
-        ConfirmBatchDelete: Label 'This will delete the Object Reservation Journal Lines associated to Batch %1', Comment = 'Batch Name', MaxLength = 80;
+        ConfirmBatchDeleteLbl: Label 'This will delete the Object Reservation Journal Lines associated to Batch %1', Comment = '%1 = Batch Name', MaxLength = 80;
 
 }

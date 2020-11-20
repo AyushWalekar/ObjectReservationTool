@@ -22,15 +22,17 @@ codeunit 50100 "Object Reservation Mgmt. TAL"
     var
         ReservedObject: Record "Reserved Object TAL";
     begin
-
-        if ObjectReservationJnlLine.FindSet() then
+        if ObjectReservationJnlLine.FindSet() then begin
             repeat
                 ReservedObject.Init();
                 ReservedObject.TransferFields(ObjectReservationJnlLine);
                 ReservedObject.Insert();
             until ObjectReservationJnlLine.Next() = 0;
-        ReserveFields(ObjectReservationJnlLine."Batch Name");
-        ObjectReservationJnlLine.DeleteAll();
+            ReserveFields(ObjectReservationJnlLine."Batch Name");
+            ObjectReservationJnlLine.DeleteAll();
+            Message(ObjectsReservedLbl);
+        end else
+            Error(NothingToReserveLbl);
     end;
 
 
@@ -55,6 +57,13 @@ codeunit 50100 "Object Reservation Mgmt. TAL"
         ObjectReservJnlLine.SetRange("Batch Name", BatchName);
         ObjectReservJnlLine.FilterGroup := 0;
         if ObjectReservJnlLine.FindSet() then;
+    end;
+
+    procedure IsIdValid(Id: Integer): Boolean
+    begin
+        if (Id <= 0) or (Id > 74999999) then
+            Error(IdNotValidErr);
+        exit(true);
     end;
 
     procedure ValidateObjectID(ObjectType: Enum "Object Type TAL"; ObjectID: Integer)
@@ -175,7 +184,10 @@ codeunit 50100 "Object Reservation Mgmt. TAL"
     var
         StartingIDtoReserve: Integer;
         CouldnotSuggestErr: Label 'Could not suggest the object IDs', MaxLength = 30;
-        ObjectIdNotAvailableLbl: Label 'Object Id %1 is not available', Comment = 'Object Id', MaxLength = 50;
-        ObjectNameNotAvailableLbl: Label 'Object Name %1 is not available', Comment = 'Object Name', MaxLength = 30;
+        ObjectIdNotAvailableLbl: Label 'Object Id %1 is not available', Comment = '%1 = Object Id', MaxLength = 50;
+        ObjectNameNotAvailableLbl: Label 'Object Name %1 is not available', Comment = '%1 = Object Name', MaxLength = 30;
+        NothingToReserveLbl: Label 'No lines to reserve', MaxLength = 30;
+        ObjectsReservedLbl: Label 'Objects Reserved', MaxLength = 20;
+        IdNotValidErr: Label 'ID is not valid', MaxLength = 20;
 
 }

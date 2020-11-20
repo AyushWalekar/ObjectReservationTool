@@ -23,7 +23,7 @@ page 50105 "ObjectReservationRoleCenterTAL"
         {
             group(Process)
             {
-                Caption = 'Object Reservation Entries';
+                Caption = 'Object Reservation';
                 ToolTip = 'Overview about Object Reseravtion Tool';
                 Image = ExecuteBatch;
 
@@ -47,6 +47,19 @@ page 50105 "ObjectReservationRoleCenterTAL"
                     ApplicationArea = ObjectReservationAppAreaTAL;
                     RunObject = Page "Object Reserv. Jnl Batch TAL";
                     ToolTip = 'Show all batches related to Object Reservation';
+                }
+            }
+            group(SuggestObjectIds)
+            {
+                Caption = 'Suggest IDs';
+                ToolTip = 'Get Suggestion about Ids that can be reserved';
+                Image = ExecuteBatch;
+                action("Suggest Object Ids")
+                {
+                    Caption = 'Suggest Object IDs';
+                    ApplicationArea = ObjectReservationAppAreaTAL;
+                    RunObject = Report "Suggest Objects TAL";
+                    ToolTip = 'Runs the report that inserts record in Object Reservation Journal based on available IDs';
                 }
             }
         }

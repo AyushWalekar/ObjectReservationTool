@@ -5,6 +5,7 @@ page 50101 "ObjectReservationJnlTAL"
     SourceTable = "ObjectReservationJnlLineTAL";
     UsageCategory = Lists;
     ApplicationArea = ObjectReservationAppAreaTAL;
+    DelayedInsert = true;
 
     layout
     {
@@ -108,6 +109,7 @@ page 50101 "ObjectReservationJnlTAL"
                     ObjectReservationMgmt: Codeunit "Object Reservation Mgmt. TAL";
                 begin
                     ObjectReservationMgmt.ReserveJournal(Rec);
+                    
                 end;
             }
 
