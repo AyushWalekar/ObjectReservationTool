@@ -48,7 +48,7 @@ codeunit 50102 "EnableObjectReservationTAL"
         AppId: Text;
         Info: ModuleInfo;
     begin
-        RoleId := 'OBJECT RESERVE BASIC';
+        RoleId := 'OBJ RESERVE BASIC';
         NavApp.GetCurrentModuleInfo(Info);
         AppId := Info.Id();
         if User.FindSet() then
@@ -74,7 +74,7 @@ codeunit 50102 "EnableObjectReservationTAL"
         AppId: Text;
         Info: ModuleInfo;
     begin
-        RoleId := 'OBJECT RESERVE BASIC';
+        RoleId := 'OBJ RESERVE BASIC';
         NavApp.GetCurrentModuleInfo(Info);
         AppId := Info.Id();
         if UserGroup.FindSet() then
